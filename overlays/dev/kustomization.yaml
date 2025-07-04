@@ -1,0 +1,25 @@
+resources:
+  - ../../base
+
+patches:
+  - path: replica-patch.yaml
+  - path: env-patch.yaml
+  
+configMapGenerator:
+  - name: nodejs-application-config
+    namespace: app
+    # behavior: replace
+    files:
+      - configs/cm-config.json
+images:
+  - name: valeriivasianovych/nodejs-example-app
+    newTag: v1
+
+labels:
+  - pairs:
+      team: saas-001
+      environment: development
+
+commonAnnotations:
+  id: dev-1.1.0
+  owner: valeriivasianovych-dev

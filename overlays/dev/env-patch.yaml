@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-application
+  namespace: app
+spec:
+  replicas: 4
+  template:
+    spec:
+      containers:
+      - name: nodejs-application
+        env:
+        - name: ENVIRONMENT
+          value: Development

@@ -1,0 +1,75 @@
+# Kubernetes
+*.kubeconfig
+kubeconfig
+.kube/
+
+# Kustomize build outputs
+kustomization-build.yaml
+kustomization-build.yml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Node.js (if using Node.js for any tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if using Python for any tooling)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Terraform (if using Terraform alongside Kustomize)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Helm (if using Helm alongside Kustomize)
+charts/*.tgz
+
+# Backup files
+*.bak
+*.backup
+
+# Secrets and sensitive files
+secrets/
+*.secret
+*.key
+*.pem
+*.crt 
