@@ -13,7 +13,7 @@ configMapGenerator:
       - configs/cm-config.json
 images:
   - name: valeriivasianovych/nodejs-example-app
-    newTag: v2
+    newTag: v1
 
 labels:
   - pairs:
