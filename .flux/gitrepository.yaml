@@ -4,7 +4,7 @@ metadata:
   name: flux-kustomize
   namespace: flux-system
 spec:
-  interval: 30s
+  interval: 15s
   url: https://github.com/ValeriiVasianovych/flux-kustomize
   ref:
     branch: main

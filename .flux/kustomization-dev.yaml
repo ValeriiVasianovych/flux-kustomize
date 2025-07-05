@@ -4,7 +4,7 @@ metadata:
   name: dev
   namespace: flux-system
 spec:
-  interval: 1m
+  interval: 30s
   path: ./overlays/dev
   prune: true
   sourceRef:
