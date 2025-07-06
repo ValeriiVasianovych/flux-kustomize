@@ -1,14 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: nodejs-application-prod
+  name: rabbitmq-namespace
   namespace: flux-system
 spec:
   interval: 30s
-  path: ./overlays/prod
+  path: ./namespaces
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-kustomize
-  targetNamespace: app-prod
-  wait: true
+  wait: true 
