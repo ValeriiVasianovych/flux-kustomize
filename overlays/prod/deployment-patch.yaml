@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-application
-  namespace: nodejs-app-prod
+  namespace: app-prod
 spec:
-  replicas: 8
+  replicas: 4
   template:
     spec:
       containers:

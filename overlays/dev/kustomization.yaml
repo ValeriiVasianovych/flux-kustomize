@@ -23,7 +23,7 @@ images:
     newTag: v1
 
 nameSuffix: -dev
-namespace: nodejs-app-dev
+namespace: app-dev
 
 labels:
   - pairs:

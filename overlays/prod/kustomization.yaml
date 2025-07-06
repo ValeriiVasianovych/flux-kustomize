@@ -23,7 +23,7 @@ images:
     newTag: v2
 
 nameSuffix: -prod
-namespace: nodejs-app-prod
+namespace: app-prod
 
 labels:
   - pairs:
