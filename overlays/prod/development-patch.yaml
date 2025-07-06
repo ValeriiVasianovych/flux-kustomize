@@ -4,7 +4,7 @@ metadata:
   name: nodejs-application
   namespace: nodejs-app-prod
 spec:
-  replicas: 6
+  replicas: 10
   template:
     spec:
       containers:

@@ -4,7 +4,7 @@ metadata:
   name: nodejs-application
   namespace: nodejs-app-dev
 spec:
-  replicas: 4
+  replicas: 8
   selector:
     matchLabels:
       app: nodejs-application
