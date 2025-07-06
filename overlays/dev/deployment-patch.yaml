@@ -4,9 +4,6 @@ metadata:
   name: nodejs-application
 spec:
   replicas: 4
-  selector:
-    matchLabels:
-      app: nodejs-application
   template:
     spec:
       containers:
