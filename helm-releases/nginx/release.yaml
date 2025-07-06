@@ -3,8 +3,11 @@ kind: HelmRelease
 metadata:
   name: nginx
   namespace: nginx
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/automated-drift-detection: "true"
 spec:
-  interval: 5m
+  interval: 10s
   releaseName: nginx
   chart:
     spec:

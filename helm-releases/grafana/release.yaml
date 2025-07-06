@@ -3,8 +3,11 @@ kind: HelmRelease
 metadata:
   name: grafana
   namespace: grafana
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/automated-drift-detection: "true"
 spec:
-  interval: 5m
+  interval: 10s
   releaseName: grafana
   chart:
     spec:
