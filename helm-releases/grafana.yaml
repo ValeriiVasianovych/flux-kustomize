@@ -14,15 +14,3 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  values:
-    adminPassword: admin
-    service:
-      type: ClusterIP
-    ingress:
-      enabled: true
-      ingressClassName: nginx
-      hosts:
-        - host: grafana.local
-          paths:
-            - path: /
-              pathType: Prefix
