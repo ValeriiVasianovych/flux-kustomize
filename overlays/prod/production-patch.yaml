@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-application
-  namespace: nodejs-app-dev
+  namespace: nodejs-app-prod
 spec:
-  replicas: 4
+  replicas: 6
   selector:
     matchLabels:
       app: nodejs-application
@@ -14,4 +14,4 @@ spec:
       - name: nodejs-application
         env:
         - name: ENVIRONMENT
-          value: Development
+          value: Production 

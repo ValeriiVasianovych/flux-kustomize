@@ -8,7 +8,7 @@ resources:
   - ../../base
 
 patches:
-  - path: development-patch.yaml
+  - path: production-patch.yaml
     target:
       kind: Deployment
       name: nodejs-application
