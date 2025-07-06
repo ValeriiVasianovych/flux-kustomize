@@ -5,6 +5,7 @@ metadata:
   name: nginx
   namespace: flux-system
 spec:
+  interval: 1h
   url: https://kubernetes.github.io/ingress-nginx 
 
 ---
@@ -14,4 +15,5 @@ metadata:
   name: grafana
   namespace: flux-system
 spec:
+  interval: 1h
   url: https://grafana.github.io/helm-charts

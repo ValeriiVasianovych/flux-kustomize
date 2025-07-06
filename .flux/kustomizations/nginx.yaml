@@ -1,0 +1,29 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: nginx-helm-release
+  namespace: flux-system
+spec:
+  interval: 30s
+  path: ./helm-releases/nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-kustomize
+  targetNamespace: nginx
+  wait: true
+  postBuild:
+    substitute: {}
+  patches:
+    - patch: |-
+        - op: replace
+          path: /metadata/name
+          value: nginx
+        - op: replace
+          path: /metadata/namespace
+          value: nginx
+      target:
+        kind: HelmRelease
+        name: nginx
+  resources:
+    - helmrelease.yaml 
