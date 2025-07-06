@@ -1,10 +1,12 @@
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: nodejs-application-config
-#   namespace: app
-# data:
-#   config.json: |
-#     {
-#       "environment": "basic"
-#     }
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nodejs-application-config
+  namespace: nodejs-app
+data:
+  config.json: |
+    {
+      "environment": "base",
+      "logLevel": "info",
+      "port": 3000
+    }

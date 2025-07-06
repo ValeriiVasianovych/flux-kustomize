@@ -1,4 +1,15 @@
 {
-  "environment": "dev",
-  "newFeatureEnabled": true
+  "environment": "development",
+  "debug": true,
+  "logLevel": "debug",
+  "port": 3000,
+  "database": {
+    "host": "localhost",
+    "port": 5432,
+    "name": "dev_db"
+  },
+  "features": {
+    "hotReload": true,
+    "profiling": true
+  }
 }

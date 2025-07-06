@@ -1,25 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: nodejs-application-dev
+
 resources:
   - ../../base
 
 patches:
-  - path: replica-patch.yaml
-  - path: env-patch.yaml
-  
+  - path: development-patch.yaml
+    target:
+      kind: Deployment
+      name: nodejs-application
+
 configMapGenerator:
-  - name: nodejs-application-config
-    namespace: app
-    # behavior: replace
+  - name: nodejs-application
     files:
       - configs/cm-config.json
+
 images:
   - name: valeriivasianovych/nodejs-example-app
     newTag: v1
 
+nameSuffix: -dev
+namespace: nodejs-app-dev
+
 labels:
   - pairs:
-      team: saas-001
+      team: saas-dev
       environment: development
+      version: dev
 
 commonAnnotations:
   id: dev-1.1.0
-  owner: valeriivasianovych-dev
+  environment: development
+  description: "Development environment configuration"

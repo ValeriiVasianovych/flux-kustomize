@@ -1,3 +1,19 @@
 {
-  "environment": "prod"
+  "environment": "production",
+  "debug": false,
+  "logLevel": "info",
+  "port": 3000,
+  "database": {
+    "host": "prod-db.example.com",
+    "port": 5432,
+    "name": "prod_db"
+  },
+  "features": {
+    "hotReload": false,
+    "profiling": false
+  },
+  "security": {
+    "rateLimit": true,
+    "ssl": true
+  }
 }

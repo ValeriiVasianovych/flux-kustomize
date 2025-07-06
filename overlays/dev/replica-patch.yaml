@@ -1,7 +1,0 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nodejs-application
-  namespace: app
-spec:
-  replicas: 4

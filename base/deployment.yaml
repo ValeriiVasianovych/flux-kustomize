@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-application
-  namespace: app
+  namespace: nodejs-app
 spec:
   replicas: 1
   selector:
@@ -19,3 +19,8 @@ spec:
         ports:
         - name: http
           containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "base"
+        - name: PORT
+          value: "3000"

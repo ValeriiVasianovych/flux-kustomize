@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-application
-  namespace: app
+  namespace: nodejs-app-dev
 spec:
   replicas: 4
   template:

@@ -1,127 +1,129 @@
-# Project Structure
+# Flux Kustomize Project
+
+A well-structured Kubernetes application deployment using Kustomize and Flux CD.
+
+## Project Structure
 
 ```
 flux-kustomize/
-├── base/                          # Base configuration (shared across environments)
-│   ├── configmap.yaml            # Base ConfigMap (currently commented out)
-│   ├── deployment.yaml           # Base Deployment
-│   ├── kustomization.yaml        # Base kustomization file
-│   ├── namespace.yaml            # Base Namespace
-│   └── service.yaml              # Base Service
-└── overlays/                      # Environment-specific customizations
-    ├── dev/                       # Development environment
-    │   ├── configs/
-    │   │   └── cm-config.json    # Dev-specific configuration
-    │   ├── env-patch.yaml        # Environment-specific patches
-    │   ├── kustomization.yaml    # Dev kustomization
-    │   └── replica-patch.yaml    # Replica count patches
-    └── prod/                      # Production environment
-        ├── configs/
-        │   └── cm-config.json    # Prod-specific configuration
-        ├── env-patch.yaml        # Environment-specific patches
-        ├── kustomization.yaml    # Prod kustomization
-        └── replica-patch.yaml    # Replica count patches
+├── base/                    # Base Kubernetes manifests
+│   ├── namespace.yaml       # Base namespace
+│   ├── deployment.yaml      # Application deployment
+│   ├── service.yaml         # Service definition
+│   ├── configmap.yaml       # Base configuration
+│   ├── kustomization.yaml   # Base kustomize config
+│   └── README.md           # Base documentation
+├── overlays/                # Environment-specific configurations
+│   ├── dev/                # Development environment
+│   │   ├── kustomization.yaml
+│   │   ├── namespace-patch.yaml
+│   │   ├── replica-patch.yaml
+│   │   ├── env-patch.yaml
+│   │   ├── configs/
+│   │   └── README.md
+│   ├── prod/               # Production environment
+│   │   ├── kustomization.yaml
+│   │   ├── namespace-patch.yaml
+│   │   ├── replica-patch.yaml
+│   │   ├── env-patch.yaml
+│   │   ├── configs/
+│   │   └── README.md
+│   └── README.md           # Overlays documentation
+├── .flux/                  # Flux CD configurations
+│   ├── kustomization-dev.yaml
+│   └── kustomization-prod.yaml
+├── helm/                   # Helm charts (RabbitMQ)
+└── README.md              # This file
 ```
 
-## Key Concepts
-
-### 1. Base Configuration
-The `base/` directory contains the common Kubernetes manifests that are shared across all environments:
-- **Namespace**: Defines the `app` namespace
-- **Deployment**: Base Node.js application deployment with 1 replica
-- **Service**: Service configuration for the application
-- **ConfigMap**: Application configuration (currently commented out)
-
-### 2. Overlays
-The `overlays/` directory contains environment-specific customizations:
-
-#### Development Environment (`overlays/dev/`)
-- Uses image tag `v1`
-- Team label: `saas-001`
-- Environment label: `development`
-- Custom ConfigMap with dev-specific configuration
-
-#### Production Environment (`overlays/prod/`)
-- Uses image tag `v2`
-- Team label: `saas-002`
-- Environment label: `production`
-- Custom ConfigMap with prod-specific configuration
-
-## Usage
+## Quick Start
 
 ### Prerequisites
-- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed
-- [kustomize](https://kustomize.io/) installed
-- Access to a Kubernetes cluster
+- Kubernetes cluster
+- kubectl configured
+- Flux CD installed (optional)
 
-### Building Manifests
+### Manual Deployment
 
-#### Development Environment
 ```bash
-# Build and apply to development cluster
-kustomize build overlays/dev | kubectl apply -f -
+# Development environment
+kubectl apply -k overlays/dev
 
-# Or build to see the generated manifests
-kustomize build overlays/dev
+# Production environment
+kubectl apply -k overlays/prod
 ```
 
-#### Production Environment
+### Flux CD Deployment
+
+The project is configured for automatic deployment with Flux CD:
+
 ```bash
-# Build and apply to production cluster
-kustomize build overlays/prod | kubectl apply -f -
-
-# Or build to see the generated manifests
-kustomize build overlays/prod
+# Apply Flux configurations
+kubectl apply -f .flux/kustomization-dev.yaml
+kubectl apply -f .flux/kustomization-prod.yaml
 ```
 
-### Viewing Differences
+## Environment Differences
+
+| Feature | Development | Production |
+|---------|-------------|------------|
+| Namespace | `nodejs-app-dev` | `nodejs-app-prod` |
+| Replicas | 1 | 3 |
+| Image Tag | v1 | v2 |
+| Team Label | `saas-dev` | `saas-prod` |
+| Name Suffix | `-dev` | `-prod` |
+
+## Configuration
+
+### Base Configuration
+- Single replica deployment
+- ClusterIP service on port 80
+- Base configuration map
+- Standard labels and annotations
+
+### Environment-Specific Overrides
+- Namespace isolation
+- Replica count adjustments
+- Environment variables
+- Configuration maps
+- Image tags
+
+## Best Practices
+
+1. **Namespace Isolation**: Each environment has its own namespace
+2. **Label Consistency**: Standardized labeling across environments
+3. **Configuration Management**: Environment-specific configs via ConfigMaps
+4. **Version Control**: Different image tags for different environments
+5. **Documentation**: Comprehensive README files for each component
+
+## Maintenance
+
+### Adding New Environments
+1. Create new directory in `overlays/`
+2. Copy existing environment structure
+3. Update namespace and configuration
+4. Add Flux configuration if needed
+
+### Updating Base Configuration
+1. Modify files in `base/`
+2. Test with `kubectl diff -k overlays/dev`
+3. Apply changes to all environments
+
+## Troubleshooting
+
+### Common Issues
+- **Namespace conflicts**: Ensure unique namespaces per environment
+- **Image pull errors**: Verify image tags exist in registry
+- **ConfigMap issues**: Check JSON syntax in config files
+
+### Debug Commands
 ```bash
-# See what would be applied
-kustomize build overlays/dev | kubectl diff -f -
+# Check generated manifests
+kubectl kustomize overlays/dev
 
-# Compare dev vs prod
-diff <(kustomize build overlays/dev) <(kustomize build overlays/prod)
-```
+# Diff changes
+kubectl diff -k overlays/dev
 
-## Kustomize Features Demonstrated
-
-### 1. Resource Management
-- **Base Resources**: Common manifests in `base/`
-- **Resource References**: Overlays reference base using `resources: [../../base]`
-
-### 2. Patches
-- **Strategic Merge Patches**: Environment-specific modifications
-- **JSON Patches**: Precise modifications to specific fields
-
-### 3. ConfigMap Generation
-- **configMapGenerator**: Creates ConfigMaps from files
-- **Environment-specific configs**: Different JSON configurations per environment
-
-### 4. Image Tagging
-- **Image tags**: Different versions for different environments
-- **Version management**: `v1` for dev, `v2` for prod
-
-### 5. Labels and Annotations
-- **Common labels**: Applied to all resources
-- **Environment-specific labels**: Different team and environment labels
-- **Common annotations**: Metadata like owner and version ID
-
-## Configuration Files
-
-### Development Config (`overlays/dev/configs/cm-config.json`)
-```json
-{
-  "environment": "development",
-  "debug": true,
-  "logLevel": "debug"
-}
-```
-
-### Production Config (`overlays/prod/configs/cm-config.json`)
-```json
-{
-  "environment": "production",
-  "debug": false,
-  "logLevel": "info"
-}
+# Check Flux status
+flux get kustomizations
 ```

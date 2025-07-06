@@ -2,12 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-application
-  namespace: app
-  labels:
-    environment: dev
-    deployed-by: kustomize
+  namespace: nodejs-app-prod
 spec:
-  replicas: 8
+  replicas: 6
   template:
     spec:
       containers:
