@@ -14,10 +14,3 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  values:
-    adminPassword: admin
-    service:
-      type: LoadBalancer
-    persistence:
-      enabled: true
-      size: 10Gi 
